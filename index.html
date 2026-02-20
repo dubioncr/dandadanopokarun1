@@ -47,7 +47,7 @@
   <body>
 
     <div id="scanning-overlay">
-      <div class="scan-message">Escanea la tarjeta</div>
+      <div class="scan-message">Escanea el cuadro</div>
     </div>
 
     <a-scene 
@@ -77,7 +77,14 @@
           width="1" 
           height="1.5" 
           position="0 0 0" 
-          rotation="0 0 0">
+          rotation="0 0 0"
+          material="opacity:0; transparent: true"
+          
+          animation__glitch= "property: material.opacity; from: 0; to: 1; dur: 100; dir: alternate; loop: 6; startEvents: targetFound"
+          
+          animation__scale= "property: scale; from: 0.9 1.1 1; to 1 1 1; dur: 200; easing: easeInBounce; startEvents: targetFound" 
+          
+          animation__final="property: material.opacity; to: 1; dur: 1; delay: 650; startEvents: targetFound">
         </a-video>
       </a-entity>
       
@@ -87,27 +94,24 @@
       const overlay = document.getElementById('scanning-overlay');
       const targetEntity = document.getElementById('target0');
       const video = document.querySelector('#dandadanVideo');
-
-      // Cuando se detecta la tarjeta: ocultar mensaje y dar PLAY
+      
       targetEntity.addEventListener("targetFound", () => {
         overlay.classList.add("hidden");
         video.play();
       });
-
-      // Cuando se pierde la tarjeta: mostrar mensaje y dar PAUSE
+      
       targetEntity.addEventListener("targetLost", () => {
         overlay.classList.remove("hidden");
         video.pause();
       });
 
-      // Truco para navegadores móviles: 
-      // Al hacer el primer toque en la pantalla (aunque sea por error), el video se desbloquea.
       window.addEventListener('click', () => {
-          video.load(); // Pre-carga el video tras la interacción del usuario
+          video.load();
       }, { once: true });
     </script>
   </body>
 </html>
+
 
 
 
