@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
   <head>
@@ -47,7 +48,7 @@
   <body>
 
     <div id="scanning-overlay">
-      <div class="scan-message">Escanea el cuadro</div>
+      <div class="scan-message">Escanea la tarjeta</div>
     </div>
 
     <a-scene 
@@ -77,14 +78,7 @@
           width="1" 
           height="1.5" 
           position="0 0 0" 
-          rotation="0 0 0"
-          material="opacity:0; transparent: true"
-          
-          animation__glitch= "property: material.opacity; from: 0; to: 1; dur: 100; dir: alternate; loop: 6; startEvents: targetFound"
-          
-          animation__scale= "property: scale; from: 0.9 1.1 1; to 1 1 1; dur: 200; easing: easeInBounce; startEvents: targetFound" 
-          
-          animation__final="property: material.opacity; to: 1; dur: 1; delay: 650; startEvents: targetFound">
+          rotation="0 0 0">
         </a-video>
       </a-entity>
       
@@ -94,23 +88,19 @@
       const overlay = document.getElementById('scanning-overlay');
       const targetEntity = document.getElementById('target0');
       const video = document.querySelector('#dandadanVideo');
-      
+
       targetEntity.addEventListener("targetFound", () => {
         overlay.classList.add("hidden");
         video.play();
-      });
-      
+        
       targetEntity.addEventListener("targetLost", () => {
         overlay.classList.remove("hidden");
         video.pause();
-      });
 
-      window.addEventListener('click', () => {
-          video.load();
-      }, { once: true });
     </script>
   </body>
 </html>
+
 
 
 
